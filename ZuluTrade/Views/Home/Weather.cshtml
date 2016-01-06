@@ -1,0 +1,49 @@
+﻿@{
+    ViewBag.Title = "Weather";
+}
+<div class="row">
+    <div class="col-sm-6 marTop60">
+        <div class="form-group">
+            <label for="exampleInputName2">City Name</label>
+            <input type="text" class="form-control" id="CityName" placeholder="City Name">
+        </div>
+    </div>
+    <div class="col-sm-6 marTop60">
+        <div id="WeatherResults"></div>
+    </div>
+</div>
+
+
+<!-- Useful scripting for current weather-->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js">
+</script>
+<script>
+    var request;
+    var gettingData = false;
+    var openWeatherMapKey = "0181418d5a0138f3471be03e5b43ccf5"
+
+
+    var getWeatherByCityName = function (cityName) {
+        gettingData = true;
+        var requestString = "http://api.openweathermap.org/data/2.5/weather?q=" +
+            cityName + "&mode=html&appid=" + openWeatherMapKey;
+        request = new XMLHttpRequest();
+        request.onload = proccessResults;
+        request.open("get", requestString, true);
+        request.send();
+    };
+
+
+    var proccessResults = function () {
+        $("#WeatherResults").html(this.responseText);
+
+    };
+
+
+    $("#CityName").change(function (request) {
+        var getweat = getWeatherByCityName($("#CityName").val());
+    });
+
+</script>
